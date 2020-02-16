@@ -2,13 +2,35 @@
 
 はじめてのDjangoアプリ開発のチュートリアルです。
 
-すぐにDjangoを使ってアプリを作ってみたい方向けです。
+すぐにDjangoを使ってアプリ開発をしてみたい方向けの内容になっています。
 
-最初は、ブログを作って、Djangoの機能を理解するのがオススメです。
+この通りに実装すると、Webアプリケーションを公開することができます。
+
+今回はHerokuを使用しています。
+
+まずは、シンプルなブログを作って、Djangoの機能を理解していきましょう。
+
+詳しいコードの解説は、Djangoの公式ページをみて下さい。
+https://docs.djangoproject.com/ja/2.2/
+
+## 目標
+
+このチュートリアルを実施すると、下記のようなブログサイトを構築することができます。
+
+https://django-template-blog-upgrade.herokuapp.com/
+
+ログイン、ブログ投稿、編集、削除、コメント機能を実装し、固定ページでAboutページなど好きなページも追加できます。
+
+![Finish](img/finish1.png)
+![Finish](img/finish2.png)
+![Finish](img/finish3.png)
+![Finish](img/finish4.png)
+
+では初めて行きましょう！！
 
 ## GitHub準備
 
-GitHubのリポジトリを作成します。
+好きな名前でGitHubのリポジトリを作成します。
 
 ![GitHub](img/github.png)
 
@@ -23,7 +45,7 @@ git commit -m "first commit"
 git remote add origin https://github.com/haruyasu/django-blog.git
 git push -u origin master
 ```
-※作成したリポジトリ名に変更する
+※作成したリポジトリ名に変更します。
 
 この時点でREADME.mdだけコミットされていると思います。
 
@@ -44,24 +66,23 @@ __pycache__
 
 ## 仮想環境
 
-仮想環境を作成する
+仮想環境を作成します。
 
 ```
 $ python3 -m venv myvenv
 ```
-## 仮想環境の開始
+### 仮想環境実行
+
+sourceコマンドで仮想環境が実行できます。
+
 ```
 $ source myvenv/bin/activate
 ```
-Djanogのインストール
 
-pipを最新版にする
-```
-(myvenv) ~$ python3 -m pip install --upgrade pip
-```
-## requirementsファイルによってパッケージをインストールする
+## パッケージをインストール
 
-requirements.txtを作成する
+requirements.txtを作成し、開発に必要なパッケージをインストールします。
+
 ```
 django-template
 ├── myvenv
@@ -75,10 +96,7 @@ Django~=2.2
 django-heroku==0.3.1
 gunicorn==19.9.0
 ```
-
-Djangoをインストールする。
-
-django-herokuはHerokuにデプロイする時に必要なパッケージです。
+※ django-herokuはHerokuにデプロイする時に必要なパッケージです。
 
 ```
 (myvenv) ~$ pip3 install -r requirements.txt
@@ -91,16 +109,19 @@ Linux(Ubuntu)の場合
 ```
 sudo apt-get install python3-dev
 ```
-※コマンドはOSによって変更する
+※ コマンドはOSによって変更して下さい。
 
-## プロジェクトを作成する
+## プロジェクトを作成
+
+django-adminコマンドでプロジェクトを作成します。
+
 ```
 (myvenv) ~$ django-admin startproject mysite .
 ```
 
-## 設定変更
+## 環境設定変更
 
-mysite/settings.pyに変更を加える
+settings.pyを変更します。
 
 mysite/settings.py
 ```python:mysite/settings.py
@@ -113,7 +134,9 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 ```
 
-## データベースをセットアップ
+## データベースのセットアップ
+
+migrateコマンドをすることでデータベースがセットアップされます。
 
 ```
 (myvenv) ~$ python3 manage.py migrate
@@ -132,6 +155,11 @@ Webサーバーを停止するには、Ctrl + Cを同時に押すと停止しま
 ![Django](img/first.png)
 
 ## 新しいアプリケーションの作成
+
+startappコマンドでアプリケーションを追加できます。
+
+今回はブログを作成するので、名前はblogにします。
+
 ```
 (myvenv) ~$ python3 manage.py startapp blog
 ```
@@ -157,7 +185,9 @@ Webサーバーを停止するには、Ctrl + Cを同時に押すと停止しま
 └── requirements.txt
 ```
 
-Djangoにアプリケーションを使えるように設定する
+### Djangoでアプリケーションを使えるように設定
+
+INSTALLED_APPSに追加します。
 
 mysite/settings.py
 ```python:mysite/settings.py
@@ -173,8 +203,10 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
 ]
 ```
+
 ## モデルの作成
 
+Postモデルを追加します。
 
 ```python:blog/models.py
 from django.conf import settings
@@ -183,28 +215,30 @@ from django.utils import timezone
 
 
 class Post(models.Model):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    title = models.CharField(max_length=200)
-    text = models.TextField()
-    created_date = models.DateTimeField(default=timezone.now)
-    published_date = models.DateTimeField(blank=True, null=True)
+  author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+  title = models.CharField(max_length=200)
+  text = models.TextField()
+  created_date = models.DateTimeField(default=timezone.now)
+  published_date = models.DateTimeField(blank=True, null=True)
 
-    def publish(self):
-        self.published_date = timezone.now()
-        self.save()
+  def publish(self):
+    self.published_date = timezone.now()
+    self.save()
 
-    def __str__(self):
-        return self.title
+  def __str__(self):
+    return self.title
 ```
 
-## データベースにモデルのためのテーブルを作成する
+## データベースにモデルのためのテーブルを作成
+
+モデルを変更したら、下記コマンドでデータベースを再構築するようにして下さい。
 
 ```
 (myvenv) ~$ python3 manage.py makemigrations blog
 (myvenv) ~$ python3 manage.py migrate blog
 ```
 
-## Django Admin
+## Adminページ(管理画面)
 
 モデルをAdminページ(管理画面)上で見えるようにします。
 
@@ -216,7 +250,9 @@ from .models import Post
 admin.site.register(Post)
 ```
 
-管理ユーザー作成
+### 管理ユーザー作成
+
+createsuperuserコマンドで管理ユーザーを作成することができます。
 
 ```
 (myvenv) ~$ python3 manage.py createsuperuser
@@ -224,20 +260,25 @@ admin.site.register(Post)
 ユーザー名、メールアドレス、パスワードを入力します。  
 パスワードは見えないので、間違えずに入力して下さい。
 
-Webサーバー開始
+### Webサーバー開始
+
 ```
 (myvenv) ~$ python3 manage.py runserver
 ```
+
+http://127.0.0.1:8000/admin/
 
 ユーザー名とパスワードを入力すると、ダッシュボードが見れます。
 
 ![Admin](img/admin.png)
 
-PostsをクリックしてPOSTを追加ボタンで、記事を追加する。
+PostsをクリックしてPOSTを追加ボタンで、記事を追加します。
 
 ![Post](img/post.png)
 
 ## URL追加
+
+urls.pyファイルを編集します。
 
 mysite/urls.py
 ```python:mysite/urls.py
@@ -252,7 +293,7 @@ urlpatterns = [
 
 ## blogのURL追加
 
-urls.pyファイルを作成
+urls.pyファイルを作成します。
 
 blog/urls.py
 ```python:blog/urls.py
@@ -266,6 +307,8 @@ urlpatterns = [
 
 ## View追加
 
+ビューを追加して、どのテンプレートファイルを使用するのかを指定します。
+
 blog/views.py
 ```python:blog/views.py
 from django.shortcuts import render
@@ -276,14 +319,15 @@ def post_list(request):
 
 ## テンプレート追加
 
-templatesフォルダとblogフォルダを追加する。
+templatesフォルダとblogフォルダを追加します。
+
 ```
 blog
 └───templates
     └───blog
 ```
 
-作成したblogフォルダにpost_list.htmlファイルを追加する。
+作成したblogフォルダにpost_list.htmlファイルを追加します。
 
 blog/templates/blog/post_list.html
 ```html:blog/templates/blog/post_list.html
@@ -295,7 +339,8 @@ blog/templates/blog/post_list.html
 </html>
 ```
 
-Webサーバー開始
+### Webサーバー開始
+
 ```
 (myvenv) ~$ python3 manage.py runserver
 ```
@@ -304,6 +349,8 @@ http://127.0.0.1:8000/
 ページが表示されました。
 
 ## テンプレート内の動的データ
+
+公開日などは動的に変わるので、ビューに追加します。
 
 blog/views.py
 ```python:blog/views.py
@@ -371,115 +418,144 @@ blog.cssファイルを作成する
 ```
 
 blog/static/css/blog.css
-```css:blog/static/css/blog.css
-* {
-  margin: 0;
-  padding: 0;
-}
 
-a:hover {
-  text-decoration: none;
-}
+https://github.com/haruyasu/django-template-upgrade/blob/master/blog/static/css/blog.css
 
-.page-header {
-  background-color: #44b78b;
-  padding: 20px 20px 20px 40px;
-}
+CSSは多いので、githubの内容をコピーして貼り付けておいて下さい。
 
-.page-header h1,
-.page-header h1 a,
-.page-header h1 a:visited,
-.page-header h1 a:active {
-  color: #ffffff;
-  font-size: 36pt;
-  text-decoration: none;
-}
-
-.content {
-  margin-left: 40px;
-}
-
-.date {
-  color: #828282;
-}
-
-.save {
-  float: right;
-}
-
-.post-form textarea,
-.post-form input {
-  width: 100%;
-}
-
-.top-menu,
-.top-menu:hover,
-.top-menu:visited {
-  color: #ffffff;
-  float: right;
-  font-size: 26pt;
-  margin-right: 20px;
-}
-
-.post {
-  margin-bottom: 50px;
-  padding: 20px 20px 20px 40px;
-}
-
-.post h2 a,
-.post h2 a:visited {
-  color: #000000;
-}
-
-.comment {
-  margin: 20px 0px 20px 20px;
-}
-```
+## トップページを変更
 
 blog/templates/blog/post_list.html
 ```html:blog/templates/blog/post_list.html
 {% load static %}
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Django Startup Template</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Blog - Django Startup</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
   <link rel="stylesheet" href="{% static 'css/blog.css' %}" />
 </head>
 
 <body>
-  <div class="page-header">
-    <h1><a href="/">Blog - Django Startup</a></h1>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="/">Blog</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+        data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+        aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <header class="masthead">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            <h1>Django Startup</h1>
+            <span class="subheading">This is your first step!</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        {% for post in posts %}
+        <div class="post-preview">
+          <a href="{% url 'post_detail' pk=post.pk %}">
+            <h2 class="post-title">
+              {{ post.title }}
+            </h2>
+          </a>
+          <p class="post-meta">{{ post.published_date }}</p>
+          <p>{{ post.text|linebreaksbr|truncatechars:100 }}</p>
+        </div>
+        <hr>
+        {% endfor %}
+
+        <!-- Pager -->
+        <div class="clearfix">
+          <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
+        </div>
+      </div>
+    </div>
   </div>
 
-  {% for post in posts %}
-  <div class="post">
-    <p>published: {{ post.published_date }}</p>
-    <h2><a href="">{{ post.title }}</a></h2>
-    <p>{{ post.text|linebreaksbr }}</p>
-  </div>
-  {% endfor %}
+  <hr>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            <li class="list-inline-item">
+              <a href="#">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-instagram fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy; Your Website 2020</p>
+        </div>
+      </div>
+    </div>
+  </footer>
 </body>
-
 </html>
 ```
 
-Webサイトを更新します。
+Webサイトを更新すると、CSSが反映されています。
 
-CSSが反映されました。
+一気にブログになったと思います。
 
-![CSS](img/css.png)
-
-## テンプレートを拡張する
+## テンプレート拡張
 
 HTMLの共通部分を取り出して、異なるページでも使えるようにします。
-こうすることで、同じことを書く必要がなくなります。
 
-base.htmlを作成する。
+こうすることで、各ページで同じことを書く必要がなくなります。
+
+先ほど変更したpost_list.htmlをコピーして、base.htmlを作成します。
+
 ```
 blog
 └───templates
@@ -488,61 +564,72 @@ blog
         └── post_list.html
 ```
 
+base.htmlのheader部分とcontent部分の内容を変更します。
+
 blog/templates/blog/base.html
 ```html:blog/templates/blog/base.html
-{% load static %}
-<!DOCTYPE html>
-<html lang="ja">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Django Startup Template</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
-  <link rel="stylesheet" href="{% static 'css/blog.css' %}" />
-</head>
-
-<body>
-  <div class="page-header">
-    <h1><a href="/">Blog - Django Startup</a></h1>
-  </div>
-  <div class="content container">
-    <div class="row">
-        <div class="col-md-8">
-          {% block content %}
+  <!-- Page Header -->
+  <header class="masthead">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          {% block header %}
           {% endblock %}
         </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        {% block content %}
+        {% endblock %}
+      </div>
     </div>
   </div>
-</body>
 
-</html>
-```
-
-postの内容を置き換えました。
-内容が変わらない部分はbase.htmlに記載します。
-
-blog/templates/blog/post_list.html
-```html:blog/templates/blog/post_list.html
-{% extends 'blog/base.html' %}
-
-{% block content %}
-  {% for post in posts %}
-  <div class="post">
-    <p>published: {{ post.published_date }}</p>
-    <h2><a href="">{{ post.title }}</a></h2>
-    <p>{{ post.text|linebreaksbr }}</p>
-  </div>
-  {% endfor %}
-{% endblock %}
 ```
 
 post_list.htmlには内容が変わる部分を記載します。
 
 先頭にはテンプレートを拡張することを追記します。
 
-## アプリケーションを拡張する
+blog/templates/blog/post_list.html
+```html:blog/templates/blog/post_list.html
+{% extends 'blog/base.html' %}
+
+{% block header %}
+<div class="site-heading">
+  <h1>Django Startup</h1>
+  <span class="subheading">This is your first step!</span>
+</div>
+{% endblock %}
+
+{% block content %}
+  {% for post in posts %}
+  <div class="post-preview">
+    <a href="{% url 'post_detail' pk=post.pk %}">
+      <h2 class="post-title">
+        {{ post.title }}
+      </h2>
+    </a>
+    <p class="post-meta">{{ post.published_date }}</p>
+    <p>{{ post.text|linebreaksbr|truncatechars:100 }}</p>
+  </div>
+  <hr>
+  {% endfor %}
+
+  <!-- Pager -->
+  <div class="clearfix">
+    <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
+  </div>
+{% endblock %}
+```
+
+## アプリケーションを拡張
 
 投稿の詳細ページを作成します。
 
