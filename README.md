@@ -11,7 +11,12 @@
 まずは、シンプルなブログを作って、Djangoの機能を理解していきましょう。
 
 詳しいコードの解説は、Djangoの公式ページをみて下さい。
+
 https://docs.djangoproject.com/ja/2.2/
+
+もしエラーが発生したり、分かりにくい箇所は下記のGitHubにて確認をして下さい。
+
+https://github.com/haruyasu/django-template-upgrade
 
 ## 目標
 
