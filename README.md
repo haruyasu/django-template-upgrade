@@ -307,7 +307,7 @@ urlpatterns = [
 
 ## View追加
 
-ビューを追加して、どのテンプレートファイルを使用するのかを指定します。
+Viewを追加して、どのテンプレートファイルを使用するのかを指定します。
 
 blog/views.py
 ```python:blog/views.py
@@ -350,7 +350,7 @@ http://127.0.0.1:8000/
 
 ## テンプレート内の動的データ
 
-公開日などは動的に変わるので、ビューに追加します。
+公開日などは動的に変わるので、Viewに追加します。
 
 blog/views.py
 ```python:blog/views.py
@@ -483,11 +483,9 @@ blog/templates/blog/post_list.html
       <div class="col-lg-8 col-md-10 mx-auto">
         {% for post in posts %}
         <div class="post-preview">
-          <a href="{% url 'post_detail' pk=post.pk %}">
-            <h2 class="post-title">
-              {{ post.title }}
-            </h2>
-          </a>
+          <h2 class="post-title">
+            {{ post.title }}
+          </h2>
           <p class="post-meta">{{ post.published_date }}</p>
           <p>{{ post.text|linebreaksbr|truncatechars:100 }}</p>
         </div>
@@ -611,11 +609,9 @@ blog/templates/blog/post_list.html
 {% block content %}
   {% for post in posts %}
   <div class="post-preview">
-    <a href="{% url 'post_detail' pk=post.pk %}">
-      <h2 class="post-title">
-        {{ post.title }}
-      </h2>
-    </a>
+    <h2 class="post-title">
+      {{ post.title }}
+    </h2>
     <p class="post-meta">{{ post.published_date }}</p>
     <p>{{ post.text|linebreaksbr|truncatechars:100 }}</p>
   </div>
@@ -633,16 +629,22 @@ blog/templates/blog/post_list.html
 
 投稿の詳細ページを作成します。
 
-### 詳細へのリンクを作成する
+### 詳細へのリンクを作成
 
 post_list.htmlを変更しましょう。
 
+タイトルのリンクを設定します。
+
 blog/templates/blog/post_list.html
 ```html:blog/templates/blog/post_list.html
-<h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
+<a href="{% url 'post_detail' pk=post.pk %}">
+  <h2 class="post-title">
+    {{ post.title }}
+  </h2>
+</a>
 ```
 
-### 投稿の詳細へのURLを作成する
+### 投稿の詳細へのURLを作成
 
 URLのパターンを指定します。
 
@@ -654,7 +656,7 @@ urlpatterns = [
 ]
 ```
 
-### 詳細のビューを追加する
+### 詳細のViewを追加
 
 view.pyにpost_detail関数を追加します。
 
@@ -667,7 +669,7 @@ def post_detail(request, pk):
     return render(request, 'blog/post_detail.html', {'post': post})
 ```
 
-### 詳細のテンプレートを追加する
+### 詳細のテンプレートを追加
 
 post_detail.htmlファイルを追加します。
 
@@ -675,16 +677,19 @@ blog/templates/blog/post_detail.html
 ```html:blog/templates/blog/post_detail.html
 {% extends 'blog/base.html' %}
 
-{% block content %}
-<div class="post">
+{% block header %}
+<div class="post-heading">
+  <h1>{{ post.title }}</h1>
   {% if post.published_date %}
-  <div class="date">
-    {{ post.published_date }}
-  </div>
+    <span class="meta">{{ post.published_date }}</span>
   {% endif %}
-  <h2>{{ post.title }}</h2>
-  <p>{{ post.text|linebreaksbr }}</p>
 </div>
+{% endblock %}
+
+{% block content %}
+<p>
+  {{ post.text|linebreaksbr }}
+</p>
 {% endblock %}
 ```
 
@@ -714,14 +719,13 @@ class PostForm(forms.ModelForm):
 
 ### フォームへのページリンクを作成
 
-リンクを追加します。
+Aboutの下にPostリンクを追加します。
 
 blog/templates/blog/base.html
 ```html:blog/templates/blog/base.html
-  <div class="page-header">
-    <a href="{% url 'post_new' %}" class="top-menu">post</a>
-    <h1><a href="/">Blog - Django Startup</a></h1>
-  </div>
+<li class="nav-item">
+  <a class="nav-link" href="{% url 'post_new' %}">Post</a>
+</li>
 ```
 
 ### フォームのURLを追加
@@ -737,7 +741,7 @@ urlpatterns = [
 ]
 ```
 
-### フォームのビューを追加
+### フォームのViewを追加
 
 blog/views.py
 ```python:blog/views.py
@@ -756,11 +760,19 @@ blog/templates/blog/post_edit.html
 ```html:blog/templates/blog/post_edit.html
 {% extends 'blog/base.html' %}
 
+{% block header %}
+<div class="site-heading">
+  <h1>New post</h1>
+</div>
+{% endblock %}
+
 {% block content %}
-  <h2>New post</h2>
-  <form method="POST" class="post-form">{% csrf_token %}
+  <form method="POST" class="post-form">
+    {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="save btn btn-default">Save</button>
+    <div class="text-right">
+      <button type="submit" class="save btn btn-success" role="button">Save</button>
+    </div>
   </form>
 {% endblock %}
 ```
@@ -789,27 +801,18 @@ def post_new(request):
 
 ### フォームの編集
 
-Editボタンを追加します。
+#### Editボタンを追加
 
 blog/templates/blog/post_detail.html
 ```html:blog/templates/blog/post_detail.html
-{% extends 'blog/base.html' %}
+<a class="btn btn-success" href="{% url 'post_edit' pk=post.pk %}" role="button">Edit</a>
 
-{% block content %}
-<div class="post">
-  {% if post.published_date %}
-  <div class="date">
-    {{ post.published_date }}
-  </div>
-  {% endif %}
-  <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}">Edit</a>
-  <h2>{{ post.title }}</h2>
-  <p>{{ post.text|linebreaksbr }}</p>
-</div>
-{% endblock %}
+<p>
+  {{ post.text|linebreaksbr }}
+</p>
 ```
 
-editのリンクを追加します。
+#### Editのリンクを追加
 
 blog/urls.py
 ```python:blog/urls.py
@@ -821,7 +824,9 @@ urlpatterns = [
 ]
 ```
 
-ビューに追記します。
+#### Viewに追加
+
+post_edit関数を追加します。
 
 blog/views.py
 ```python:blog/views.py
@@ -848,17 +853,21 @@ def post_edit(request, pk):
 
 ログインしている人だけに表示するように制限することができます。
 
+user.is_authenticatedを使用すると、ログインユーザーだけに制限します。
+
 blog/templates/blog/base.html
 ```html:blog/templates/blog/base.html
 {% if user.is_authenticated %}
-  <a href="{% url 'post_new' %}" class="top-menu">Post</i></a>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'post_new' %}">Post</a>
+  </li>
 {% endif %}
 ```
 
 blog/templates/blog/post_detail.html
 ```html:blog/templates/blog/post_detail.html
 {% if user.is_authenticated %}
-  <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}">Edit</a>
+  <a class="btn btn-success" href="{% url 'post_edit' pk=post.pk %}" role="button">Edit</a>
 {% endif %}
 ```
 
@@ -867,6 +876,7 @@ blog/templates/blog/post_detail.html
 ## 下書き機能を追加
 
 今までは投稿するとすぐに公開されましたが、下書きに保存することができます。
+
 blog/views.pyのpost_new関数とpost_edit関数にあるpost.published_dateを削除します。
 
 blog/views.py
@@ -874,21 +884,23 @@ blog/views.py
 post.published_date = timezone.now()
 ```
 
-base.htmlにDraftボタンを追加する。
+### Draftボタンを追加
 
 blog/templates/blog/base.html
 ```html:blog/templates/blog/base.html
-<a href="{% url 'post_draft_list' %}" class="top-menu">Draft</a>
+<li class="nav-item">
+  <a class="nav-link" href="{% url 'post_draft_list' %}">Draft</a>
+</li>
 ```
 
-urls.pyにurlを追加する。
+### urlを追加
 
 blog/urls.py
 ```python:blog/urls.py
 path('drafts/', views.post_draft_list, name='post_draft_list'),
 ```
 
-下書き機能をビューに追加する。
+### 下書き機能をViewに追加
 
 blog/views.py
 ```python:blog/views.py
@@ -898,19 +910,32 @@ def post_draft_list(request):
   return render(request, 'blog/post_draft_list.html', {'posts': posts})
 ```
 
-post_draft_list.htmlファイルを追加し、テンプレートを作成する。
+### 下書きテンプレートを追加
+
+post_draft_list.htmlファイルを追加し、テンプレートを作成します。
 
 blog/templates/blog/post_draft_list.html
 ```html:blog/templates/blog/post_draft_list.html
 {% extends 'blog/base.html' %}
 
+{% block header %}
+<div class="site-heading">
+  <h1>Draft</h1>
+</div>
+{% endblock %}
+
 {% block content %}
   {% for post in posts %}
-    <div class="post">
-      <p class="date">created: {{ post.created_date|date:'d-m-Y' }}</p>
-      <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
-      <p>{{ post.text|truncatechars:200 }}</p>
-    </div>
+  <div class="post-preview">
+    <a href="{% url 'post_detail' pk=post.pk %}">
+      <h2 class="post-title">
+        {{ post.title }}
+      </h2>
+    </a>
+    <p class="post-meta">{{ post.created_date }}</p>
+    <p>{{ post.text|truncatechars:200 }}</p>
+  </div>
+  <hr>
   {% endfor %}
 {% endblock %}
 ```
@@ -923,23 +948,19 @@ http://127.0.0.1:8000/drafts/
 
 blog/templates/blog/post_detail.html
 ```html:blog/templates/blog/post_detail.html
-{% if post.published_date %}
-  <div class="date">
-    {{ post.published_date }}
-  </div>
-{% else %}
-    <a class="btn btn-default" href="{% url 'post_publish' pk=post.pk %}">Publish</a>
+{% if not post.published_date %}
+  <a class="btn btn-warning" href="{% url 'post_publish' pk=post.pk %}" role="button">Publish</a>
 {% endif %}
 ```
 
-urls.pyにurlを追加する。
+#### urls.pyにurlを追加
 
 blog/urls.py
 ```python:blog/urls.py
 path('post/<pk>/publish/', views.post_publish, name='post_publish'),
 ```
 
-ビューを追加する。
+#### Viewを追加
 
 blog/views.py
 ```python:blog/views.py
@@ -951,23 +972,23 @@ def post_publish(request, pk):
 
 ## 削除機能を追加
 
-削除ボタンを追加する。
+### 削除ボタンを追加
 
 編集ボタンの下に追加します。
 
 blog/templates/blog/post_detail.html
 ```html:blog/templates/blog/post_detail.html
-<a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}">Delete</a>
+<a class="btn btn-danger" href="{% url 'post_remove' pk=post.pk %}" role="button">Delete</a>
 ```
 
-urlも追加します。
+### urlを追加
 
 blog/urls.py
 ```python:blog/urls.py
 path('post/<pk>/remove/', views.post_remove, name='post_remove'),
 ```
 
-ビューも追加します。
+### Viewを追加
 
 blog/views.py
 ```python:blog/views.py
@@ -979,9 +1000,11 @@ def post_remove(request, pk):
 
 投稿を削除できるようになりました。
 
-## セキュリティを強化する
+## セキュリティを強化
 
-view.pyに追記します。
+ログインしている人だけが投稿、編集、削除、公開をできるように修正します。
+
+### view.pyに追記
 
 blog/views.py
 ```python:blog/views.py
@@ -989,6 +1012,7 @@ from django.contrib.auth.decorators import login_required
 ```
 
 post_new, post_edit, post_draft_list, post_remove, post_publish関数の上にデコレーターを追記します。
+
 ```python:blog/views.py
 @login_required
 def post_new(request):
@@ -998,6 +1022,8 @@ def post_new(request):
 ### ユーザーログイン機能
 
 ログイン、ログアウト機能を実装します。
+
+#### urlを追記
 
 mysite/urls.py
 ```python:mysite/urls.py
@@ -1013,35 +1039,49 @@ urlpatterns = [
 ]
 ```
 
+#### テンプレートを追加
+
 blog/templates/registrationフォルダを作成し、login.htmlファイルを作成します。
 
 blog/templates/registration/login.html
 ```html:blog/templates/registration/login.html
 {% extends "blog/base.html" %}
 
+{% block header %}
+<div class="site-heading">
+  <h1>Login</h1>
+</div>
+{% endblock %}
+
 {% block content %}
   {% if form.errors %}
-    <p>Your username and password didn't match. Please try again.</p>
+    <p>ユーザー名、パスワードが間違っています。もう一度入力して下さい。</p>
   {% endif %}
-
-  <form method="post" action="{% url 'login' %}">
-  {% csrf_token %}
-    <table>
-    <tr>
-      <td>{{ form.username.label_tag }}</td>
-      <td>{{ form.username }}</td>
-    </tr>
-    <tr>
-      <td>{{ form.password.label_tag }}</td>
-      <td>{{ form.password }}</td>
-    </tr>
-    </table>
-
-    <input type="submit" value="login" />
-    <input type="hidden" name="next" value="{{ next }}" />
-  </form>
+  <div class="row justify-content-center">
+    <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+      <table>
+      <tr>
+        <td>{{ form.username.label_tag }}</td>
+        <td>{{ form.username }}</td>
+      </tr>
+      <tr>
+        <td>{{ form.password.label_tag }}</td>
+        <td>{{ form.password }}</td>
+      </tr>
+      </table>
+      <div class="text-right">
+        <p>
+          <button type="submit" class="save btn btn-success" role="button">Send</button>
+        </p>
+        </div>
+      <input type="hidden" name="next" value="{{ next }}" />
+    </form>
+  </div>
 {% endblock %}
 ```
+
+#### 設定を変更
 
 mysite/settings.pyを変更します。
 
@@ -1052,27 +1092,36 @@ mysite/settings.py
 LOGIN_REDIRECT_URL = '/'
 ```
 
-テンプレートを変更する
+#### テンプレートを変更
 
 blog/templates/blog/base.html
 ```html:blog/templates/blog/base.html
 {% if user.is_authenticated %}
-  <a href="{% url 'post_new' %}" class="top-menu">Post</a>
-  <a href="{% url 'post_draft_list' %}" class="top-menu">Draft</a>
-  <p class="top-menu">Hello {{ user.username }} <small>(<a href="{% url 'logout' %}">Log out</a>)</small></p>
+<li class="nav-item">
+  <a class="nav-link" href="{% url 'post_new' %}">Post</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="{% url 'post_draft_list' %}">Draft</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="{% url 'logout' %}">Log out</a>
+</li>
 {% else %}
-    <a href="{% url 'login' %}" class="top-menu">Login</a>
+<li class="nav-item">
+  <a class="nav-link" href="{% url 'login' %}">Login</a>
+</li>
 {% endif %}
 ```
 
 ログイン、ログアウト機能が実装されました。
 
 ログインして、投稿、編集、削除ボタンが表示されていることを確認してみて下さい。
-そして、ログアウトすると、投稿、編集、削除ボタンが表示されないと思います。
 
-## コメントを実装する
+そして、ログアウトすると、投稿、編集、削除ボタンが表示されません。
 
-### コメントモデルを実装する
+## コメントを実装
+
+### コメントモデルを実装
 
 models.pyに追記します。
 
@@ -1094,13 +1143,13 @@ class Comment(models.Model):
     return self.text
 ```
 
-### データベースにコメントモデルのテーブルを追加する
+### データベースにコメントモデルのテーブルを追加
 
 ```
 (myvenv) ~$ pthon3 manage.py makemigrations blog
 (myvenv) ~$ python3 manage.py migrate blog
 ```
-### 管理画面にコメントモデルを登録する
+### 管理画面にコメントモデルを登録
 
 blog/admin.py
 ```python:blog/admin.py
@@ -1115,47 +1164,44 @@ admin.site.register(Comment)
 
 http://127.0.0.1:8000/admin/blog/comment/
 
-### コメントを表示する
+### コメントを表示
 
 最後の{% endblock %}の前に追記します。
 
 blog/templates/blog/post_detail.html
 ```html:blog/templates/blog/post_detail.html
+<p>
+  {{ post.text|linebreaksbr }}
+</p>
+
 <hr>
 {% for comment in post.comments.all %}
-  <div class="comment">
-    <div class="date">{{ comment.created_date }}</div>
-    <strong>{{ comment.author }}</strong>
-    <p>{{ comment.text|linebreaks }}</p>
-  </div>
+  <p class="comment-meta">{{ comment.created_date }}</p>
+  <strong>{{ comment.author }}</strong>
+  <p>{{ comment.text|linebreaks }}</p>
 {% empty %}
-  <p>No comments here yet :(</p>
+  <p>まだコメントはありません。</p>
 {% endfor %}
-```
 
-投稿ページでコメントの数を表示する。
-
-blog/templates/blog/post_list.html
-```html:blog/templates/blog/post_list.html
-{% extends 'blog/base.html' %}
-
-{% block content %}
-  {% for post in posts %}
-  <div class="post">
-    <div class="date">
-        {{ post.published_date }}
-    </div>
-    <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
-    <p>{{ post.text|linebreaksbr }}</p>
-    <a href="{% url 'post_detail' pk=post.pk %}">Comments: {{ post.comments.count }}</a>
-  </div>
-  {% endfor %}
 {% endblock %}
 ```
 
-### コメントを投稿する
+投稿ページでコメントの数を表示します。
 
-forms.pyファイルを変更する。
+blog/templates/blog/post_list.html
+```html:blog/templates/blog/post_list.html
+  <p>{{ post.text|linebreaksbr|truncatechars:100 }}</p>
+  <a href="{% url 'post_detail' pk=post.pk %}">
+    <p class="post-comment">Comments: {{ post.comments.count }}</p>
+  </a>
+</div>
+<hr>
+{% endfor %}
+```
+
+### コメントを投稿
+
+forms.pyファイルを変更します。
 
 blog/forms.py
 ```python:blog/forms.py
@@ -1174,23 +1220,26 @@ class CommentForm(forms.ModelForm):
     fields = ('author', 'text',)
 
 ```
-コメントを投稿するボタンを追加する。
+
+#### コメントを投稿するボタンを追加
 
 blog/templates/blog/post_detail.html
 ```html:blog/templates/blog/post_detail.html
 <hr>
-<a class="btn btn-default" href="{% url 'post_comment' pk=post.pk %}">Add comment</a>
+<p>
+  <a class="btn btn-success" href="{% url 'post_comment' pk=post.pk %}" role="button">Add comment</a>
+</p>
 {% for comment in post.comments.all %}
 ```
 
-urls.pyにコメントのurlを追加する。
+#### urlを追加
 
 blog/urls.py
 ```python:blog/urls.py
 path('post/<int:pk>/comment/', views.post_comment, name='post_comment'),
 ```
 
-ビューを追加する。
+#### Viewを追加
 
 blog/views.py
 ```python:blog/views.py
@@ -1210,22 +1259,30 @@ def post_comment(request, pk):
   return render(request, 'blog/post_comment.html', {'form': form})
 ```
 
-コメントを投稿するテンプレートを作成する。
+#### コメントを投稿するテンプレートを追加
 
 blog/templates/blog/post_comment.html
 ```html:blog/templates/blog/post_comment.html
 {% extends 'blog/base.html' %}
 
-{% block content %}
+{% block header %}
+<div class="site-heading">
   <h1>New comment</h1>
-  <form method="POST" class="post-form">{% csrf_token %}
+</div>
+{% endblock %}
+
+{% block content %}
+  <form method="POST" class="post-form">
+    {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="save btn btn-default">Send</button>
+    <div class="text-right">
+      <button type="submit" class="save btn btn-success" role="button">Send</button>
+    </div>
   </form>
 {% endblock %}
 ```
 
-### コメントを管理する
+### コメントを管理
 
 コメントを承認または削除できるようにします。
 
@@ -1233,16 +1290,16 @@ RemoveボタンとApproveボタンを追加します。
 
 blog/templates/blog/post_detail.html
 ```html:blog/templates/blog/post_detail.html
-<div class="date">
-  {{ comment.created_date }}
+{% for comment in post.comments.all %}
   {% if not comment.approved_comment %}
-    <a class="btn btn-default" href="{% url 'comment_remove' pk=comment.pk %}">Remove</a>
-    <a class="btn btn-default" href="{% url 'comment_approve' pk=comment.pk %}">Approve</a>
+  <p>
+    <a class="btn btn-danger" href="{% url 'comment_remove' pk=comment.pk %}" role="button">Remove</a>
+    <a class="btn btn-primary" href="{% url 'comment_approve' pk=comment.pk %}" role="button">Approve</a>
+  </p>
   {% endif %}
-</div>
 ```
 
-urls.pyにurlを追加する。
+#### urlを追加
 
 blog/urls.py
 ```python:blog/urls.py
@@ -1250,7 +1307,7 @@ blog/urls.py
   path('comment/<int:pk>/remove/', views.comment_remove, name='comment_remove'),
 ```
 
-ビューを追加する。
+#### Viewを追加
 
 blog/views.py
 ```python:blog/views.py
@@ -1271,16 +1328,22 @@ def comment_remove(request, pk):
 
 これで、コメントの承認と削除ができるようになりました。
 
-承認されたコメント数を表示する。
+#### 承認されたコメント数を表示
 
 blog/templates/blog/post_list.html
 ```html:blog/templates/blog/post_list.html
-<a href="{% url 'post_detail' pk=post.pk %}">Comments: {{ post.approved_comments.count }}</a>
+  <p>{{ post.text|linebreaksbr|truncatechars:100 }}</p>
+  <a href="{% url 'post_detail' pk=post.pk %}">
+    <p class="post-comment">Comments: {{ post.approved_comments.count }}</p>
+  </a>
+</div>
+<hr>
+{% endfor %}
 ```
 
-モデルを追加する。
+#### モデルを追加
 
-Postモデルに追加する。
+Postモデルに追加します。
 
 blog/models.py
 ```python:blog/models.py
@@ -1292,7 +1355,11 @@ class Post(models.Model):
 
 以上で、ブログアプリケーションの構築が完了です。
 
-## Herokuにデプロイする
+記事の投稿、編集、削除、公開、コメント、ログイン、ログアウトなどの機能を操作して、問題がないか確かめて下さい。
+
+問題がなければ、全世界に公開します。
+
+## Herokuにデプロイ
 
 デプロイとは、特定の環境下でアプリケーションやシステムを使えるようにすることです。
 
@@ -1329,7 +1396,7 @@ whitenoise==5.0.1
 
 Procfileは、アプリのプロセスタイプやエントリーポイントを宣言するファイルです。
 
-Procfileを作成する。
+Procfileを作成します。
 
 ```
 django-template
@@ -1351,7 +1418,7 @@ runtime.txtにはプログラム実行時に必要なものを定義します。
 
 ここではPythonが必要なのでPythonのバージョンを指定します。
 
-runtime.txtを作成する。
+runtime.txtを作成します。
 
 ```
 django-template
@@ -1411,7 +1478,7 @@ Creating ⬢ django-template-blog... done
 https://django-template-blog.herokuapp.com/ | https://git.heroku.com/django-template-blog.git
 ```
 
-#### Herokuにpushする
+#### Herokuにpush
 
 Herokuにpushする前に、GitHubにすべてコミットしておいて下さい。
 
@@ -1428,7 +1495,7 @@ To https://git.heroku.com/django-template-blog.git
  * [new branch]      master -> master
 ```
 
-#### プロセスを起動する
+#### プロセスを起動
 
 このままだとgunicornのサーバーが起動していないため、アプリケーションが起動しません。
 
@@ -1511,7 +1578,7 @@ https://django-template-blog.herokuapp.com/
 
 デプロイは成功しましたが、セキュリティ上の問題があります。
 
-### DebugをFalseにする
+### DebugをFalse
 
 現在、Debug機能が有効になっているため、もしエラーが発生した場合、詳細な情報が表示されてしまいます。
 
