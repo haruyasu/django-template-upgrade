@@ -1092,7 +1092,7 @@ class CommentForm(forms.ModelForm):
 blog/templates/blog/post_detail.html
 ```html:blog/templates/blog/post_detail.html
 <hr>
-<a class="btn btn-default" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
+<a class="btn btn-default" href="{% url 'post_comment' pk=post.pk %}">Add comment</a>
 {% for comment in post.comments.all %}
 ```
 
@@ -1100,7 +1100,7 @@ urls.pyにコメントのurlを追加する。
 
 blog/urls.py
 ```python:blog/urls.py
-path('post/<int:pk>/comment/', views.add_comment_to_post, name='add_comment_to_post'),
+path('post/<int:pk>/comment/', views.post_comment, name='post_comment'),
 ```
 
 ビューを追加する。
@@ -1109,7 +1109,7 @@ blog/views.py
 ```python:blog/views.py
 from .forms import PostForm, CommentForm
 
-def add_comment_to_post(request, pk):
+def post_comment(request, pk):
   post = get_object_or_404(Post, pk=pk)
   if request.method == "POST":
     form = CommentForm(request.POST)
@@ -1120,13 +1120,13 @@ def add_comment_to_post(request, pk):
       return redirect('post_detail', pk=post.pk)
   else:
     form = CommentForm()
-  return render(request, 'blog/add_comment_to_post.html', {'form': form})
+  return render(request, 'blog/post_comment.html', {'form': form})
 ```
 
 コメントを投稿するテンプレートを作成する。
 
-blog/templates/blog/add_comment_to_post.html
-```html:blog/templates/blog/add_comment_to_post.html
+blog/templates/blog/post_comment.html
+```html:blog/templates/blog/post_comment.html
 {% extends 'blog/base.html' %}
 
 {% block content %}
