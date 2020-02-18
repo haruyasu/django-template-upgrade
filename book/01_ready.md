@@ -4,7 +4,7 @@
 
 好きな名前でGitHubのリポジトリを作成します。
 
-![GitHub](img/github.png)
+![GitHub](../img/github.png)
 
 ローカルにリポジトリ名と同じフォルダを作成します。
 
