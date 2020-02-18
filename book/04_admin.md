@@ -31,8 +31,8 @@ http://127.0.0.1:8000/admin/
 
 ユーザー名とパスワードを入力すると、ダッシュボードが見れます。
 
-![Admin](img/admin.png)
+![Admin](../img/admin.png)
 
 PostsをクリックしてPOSTを追加ボタンで、記事を追加します。
 
-![Post](img/post.png)
+![Post](../img/post.png)

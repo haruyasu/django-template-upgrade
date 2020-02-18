@@ -39,4 +39,4 @@ http://127.0.0.1:8000/
 
 Webサーバーを停止するには、Ctrl + Cを同時に押すと停止します。
 
-![Django](img/first.png)
+![Django](../img/first.png)
