@@ -27,8 +27,20 @@ https://django-template-blog-upgrade.herokuapp.com/
 ログイン、ブログ投稿、編集、削除、コメント機能を実装し、固定ページでAboutページなど好きなページも追加できます。
 
 ![Finish](/img/finish1.png)
+
 ![Finish](/img/finish2.png)
+
 ![Finish](/img/finish3.png)
+
 ![Finish](/img/finish4.png)
 
-では初めて行きましょう！！
+## 前提知識
+
+Djangoを始める前に、下記の言語は学習しておいて下さい。
+
+* Python
+* HTML
+* CSS
+* JavaScript
+
+では、初めて行きましょう！！
