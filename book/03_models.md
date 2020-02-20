@@ -51,7 +51,20 @@ INSTALLED_APPS = [
 
 ## モデルの作成
 
-Postモデルを追加します。
+最初に投稿機能を追加しますので、Postモデルを追加します。
+
+クラスを追加し、各プロパティを定義していきます。
+
+ForeignKey、CharField、TextField、DateTimeFieldなどのフィールド解説は公式ドキュメントを参考にしてみて下さい。
+https://docs.djangoproject.com/ja/2.2/ref/models/fields/#charfield
+
+* ForeignKey:多対1の関係で他のモデルへのリンク
+* CharField:文字列のフィールド
+* TextField:多量のテキストのフィールド
+* DateTimeField:日付と時刻
+
+わかりやすいまとまっています。
+https://qiita.com/nachashin/items/f768f0d437e0042dd4b3
 
 ```python:blog/models.py
 from django.conf import settings
@@ -76,7 +89,7 @@ class Post(models.Model):
 
 ## データベースにモデルのためのテーブルを作成
 
-モデルを変更したら、下記コマンドでデータベースを再構築するようにして下さい。
+モデルを変更したら、下記コマンドでデータベースを再構築が必要になります。
 
 ```
 (myvenv) ~$ python3 manage.py makemigrations blog
