@@ -1,6 +1,10 @@
 # URL追加
 
-urls.pyファイルを編集します。
+各URLを追加するには、urls.pyを編集します。
+
+今回は、トップページのURLを作成します。
+
+トップページにアクセスした時には、blog.urlsへリダイレクトするよにします。
 
 mysite/urls.py
 ```python:mysite/urls.py
@@ -9,7 +13,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('blog.urls')),
+    path('', include('blog.urls')), #追加
 ]
 ```
 
