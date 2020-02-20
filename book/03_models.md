@@ -56,6 +56,7 @@ INSTALLED_APPS = [
 クラスを追加し、各プロパティを定義していきます。
 
 ForeignKey、CharField、TextField、DateTimeFieldなどのフィールド解説は公式ドキュメントを参考にしてみて下さい。
+
 https://docs.djangoproject.com/ja/2.2/ref/models/fields/#charfield
 
 * ForeignKey：多対1の関係で他のモデルへのリンク
@@ -64,6 +65,7 @@ https://docs.djangoproject.com/ja/2.2/ref/models/fields/#charfield
 * DateTimeField：日付と時刻のフィールド
 
 わかりやすいまとまっています。
+
 https://qiita.com/nachashin/items/f768f0d437e0042dd4b3
 
 ```python:blog/models.py
