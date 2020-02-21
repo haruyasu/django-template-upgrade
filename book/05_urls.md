@@ -34,3 +34,5 @@ urlpatterns = [
     path('', views.post_list, name='post_list'),
 ]
 ```
+
+次は、viewのpost_listを作ります。
