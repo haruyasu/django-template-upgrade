@@ -1,6 +1,8 @@
 # HTML追加
 
-templatesフォルダとblogフォルダを追加します。
+先程、viewでpost_list.htmlを表示するように指定したので、post_list.htmlを作成していきます。
+
+blogの下にtemplatesフォルダとblogフォルダを追加します。
 
 ```
 blog
@@ -9,6 +11,8 @@ blog
 ```
 
 作成したblogフォルダにpost_list.htmlファイルを追加します。
+
+まずは最小限のHTMLを追加してみましょう。
 
 blog/templates/blog/post_list.html
 ```html:blog/templates/blog/post_list.html
@@ -27,4 +31,7 @@ blog/templates/blog/post_list.html
 ```
 http://127.0.0.1:8000/
 
-ページが表示されました。
+Hello!
+This is working.
+
+トップページで文字が表示されましたでしょうか！
