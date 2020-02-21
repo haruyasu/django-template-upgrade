@@ -1,6 +1,6 @@
-# View追加
+# Viewの作成
 
-先程、トップページにきたときに、viewのpost_listをみるように指定したので、viewでpost_list関数を作成します。
+先程、トップページにアクセスしたときに、viewのpost_listをみるように指定したので、viewでpost_list関数を作成します。
 
 returnにrender関数をコールして、どのテンプレートファイルを使用するのかを指定します。
 

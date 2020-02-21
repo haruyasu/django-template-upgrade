@@ -1,4 +1,4 @@
-# URL追加
+# URLの作成
 
 各URLを追加するには、urls.pyを編集します。
 
@@ -23,7 +23,7 @@ blogの下に、urls.pyファイルを作成します。
 
 トップページにviewのpost_listを割り当てます。
 
-こうすることで、トップページに来た時に、post_listをみることになります。
+トップページにアクセスした時に、post_listをみることになります。
 
 blog/urls.py
 ```python:blog/urls.py

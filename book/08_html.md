@@ -1,4 +1,4 @@
-# HTML追加
+# HTMLの作成
 
 先程、viewでpost_list.htmlを表示するように指定したので、post_list.htmlを作成していきます。
 
@@ -31,7 +31,8 @@ blog/templates/blog/post_list.html
 ```
 http://127.0.0.1:8000/
 
-Hello!
-This is working.
+トップページに文字が表示されましたでしょうか！
 
-トップページで文字が表示されましたでしょうか！
+Hello!
+
+This is working.

@@ -1,55 +1,5 @@
 
-# 新しいアプリケーションの作成
-
-startappコマンドでアプリケーションを追加できます。
-
-今回はブログを作成するので、名前はblogにします。
-
-```
-(myvenv) ~$ python3 manage.py startapp blog
-```
-```
-├── blog
-│   ├── admin.py
-│   ├── apps.py
-│   ├── __init__.py
-│   ├── migrations
-│   │   └── __init__.py
-│   ├── models.py
-│   ├── tests.py
-│   └── views.py
-├── db.sqlite3
-├── manage.py
-├── mysite
-│   ├── __init__.py
-│   ├── settings.py
-│   ├── urls.py
-│   └── wsgi.py
-├── myvenv
-│   └── ...
-└── requirements.txt
-```
-
-### Djangoでアプリケーションを使えるように設定
-
-INSTALLED_APPSに追加します。
-
-mysite/settings.py
-```python:mysite/settings.py
-# Application definition
-
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'blog.apps.BlogConfig',
-]
-```
-
-## モデルの作成
+# モデルの作成
 
 最初に投稿機能を追加しますので、Postモデルを追加します。
 
@@ -64,7 +14,7 @@ https://docs.djangoproject.com/ja/2.2/ref/models/fields/#charfield
 * TextField：多量のテキストのフィールド
 * DateTimeField：日付と時刻のフィールド
 
-わかりやすいまとまっています。
+分かりやすくまとまっています。
 
 https://qiita.com/nachashin/items/f768f0d437e0042dd4b3
 
@@ -91,7 +41,7 @@ class Post(models.Model):
 
 ## データベースにモデルのためのテーブルを作成
 
-モデルを変更したら、下記コマンドでデータベースを再構築が必要になります。
+モデルを変更したら、下記コマンドで必ずデータベースの再構築が必要になります。
 
 ```
 (myvenv) ~$ python3 manage.py makemigrations blog
