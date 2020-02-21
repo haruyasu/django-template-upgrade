@@ -4,7 +4,7 @@
 
 今回は、トップページのURLを作成します。
 
-トップページにアクセスした時には、blog.urlsへリダイレクトするよにします。
+トップページにアクセスした時には、blog.urlsへリダイレクトするようにします。
 
 mysite/urls.py
 ```python:mysite/urls.py
@@ -19,7 +19,11 @@ urlpatterns = [
 
 ## blogのURL追加
 
-urls.pyファイルを作成します。
+blogの下に、urls.pyファイルを作成します。
+
+トップページにviewのpost_listを割り当てます。
+
+こうすることで、トップページに来た時に、post_listをみることになります。
 
 blog/urls.py
 ```python:blog/urls.py
