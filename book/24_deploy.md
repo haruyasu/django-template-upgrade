@@ -207,7 +207,7 @@ Superuser created successfully.
 
 デプロイしたURLにアクセスしてみましょう。
 
-https://django-template-blog.herokuapp.com/
+{% embed url="https://django-template-blog.herokuapp.com/" %}
 
 ローカルと同じ画面が表示されているはずです。
 
