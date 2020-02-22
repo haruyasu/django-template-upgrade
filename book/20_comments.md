@@ -1,14 +1,13 @@
-# コメントを実装
+# コメント機能の追加
 
-## コメントモデルを実装
+## コメントのモデルを作成
 
 models.pyに追記します。
 
 blog/models.py
 ```python:blog/models.py
 class Comment(models.Model):
-  post = models.ForeignKey(
-    'blog.Post', on_delete=models.CASCADE, related_name='comments')
+  post = models.ForeignKey('blog.Post', on_delete=models.CASCADE, related_name='comments')
   author = models.CharField(max_length=200)
   text = models.TextField()
   created_date = models.DateTimeField(default=timezone.now)
@@ -24,11 +23,15 @@ class Comment(models.Model):
 
 ## データベースにコメントモデルのテーブルを追加
 
+モデルを追加した場合は、必ずデータベースを更新して下さい。
+
 ```
 (myvenv) ~$ pthon3 manage.py makemigrations blog
 (myvenv) ~$ python3 manage.py migrate blog
 ```
 ## 管理画面にコメントモデルを登録
+
+管理画面でコメントを操作できるようにします。
 
 blog/admin.py
 ```python:blog/admin.py
@@ -45,7 +48,7 @@ http://127.0.0.1:8000/admin/blog/comment/
 
 ## コメントを表示
 
-最後の{% endblock %}の前に追記します。
+最後の\{% endblock %\}の前に追記します。
 
 blog/templates/blog/post_detail.html
 ```html:blog/templates/blog/post_detail.html
@@ -100,7 +103,7 @@ class CommentForm(forms.ModelForm):
 
 ```
 
-### コメントを投稿するボタンを追加
+### コメントボタンを作成
 
 blog/templates/blog/post_detail.html
 ```html:blog/templates/blog/post_detail.html
@@ -111,14 +114,14 @@ blog/templates/blog/post_detail.html
 {% for comment in post.comments.all %}
 ```
 
-### urlを追加
+### コメントのurlを作成
 
 blog/urls.py
 ```python:blog/urls.py
 path('post/<int:pk>/comment/', views.post_comment, name='post_comment'),
 ```
 
-### Viewを追加
+### コメントのViewを作成
 
 blog/views.py
 ```python:blog/views.py
@@ -138,7 +141,7 @@ def post_comment(request, pk):
   return render(request, 'blog/post_comment.html', {'form': form})
 ```
 
-### コメントを投稿するテンプレートを追加
+### コメントを投稿するテンプレートを作成
 
 blog/templates/blog/post_comment.html
 ```html:blog/templates/blog/post_comment.html
@@ -178,7 +181,7 @@ blog/templates/blog/post_detail.html
   {% endif %}
 ```
 
-### urlを追加
+### コメント管理のurlを作成
 
 blog/urls.py
 ```python:blog/urls.py
@@ -186,7 +189,7 @@ blog/urls.py
   path('comment/<int:pk>/remove/', views.comment_remove, name='comment_remove'),
 ```
 
-### Viewを追加
+### コメント管理のViewを作成
 
 blog/views.py
 ```python:blog/views.py
@@ -231,3 +234,7 @@ class Post(models.Model):
   def approved_comments(self):
     return self.comments.filter(approved_comment=True)
 ```
+
+これでコメント機能が実装されました。
+
+コメントボタンをクリックしてコメントが投稿できるか試してみて下さい。

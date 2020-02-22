@@ -2,6 +2,8 @@
 
 ログインしている人だけが投稿、編集、削除、公開をできるように修正します。
 
+各ボタンはログインユーザーだけに表示されるように制限をしましたが、viewの中にも制御する必要があります。
+
 ## viewに追記
 
 @login_requiredを追記すると、ログインしている人だけに制限できます。
@@ -19,11 +21,13 @@ def post_new(request):
     [...]
 ```
 
-## ユーザーログイン機能
+## ログイン、ログアウト機能を作成
 
 ログイン、ログアウト機能を実装します。
 
-### urlを追記
+### ログイン、ログアウトのurlを作成
+
+login、logoutのurlを追記します。
 
 mysite/urls.py
 ```python:mysite/urls.py
@@ -42,6 +46,8 @@ urlpatterns = [
 ### テンプレートを追加
 
 blog/templates/registrationフォルダを作成し、login.htmlファイルを作成します。
+
+ログイン画面を作成します。
 
 blog/templates/registration/login.html
 ```html:blog/templates/registration/login.html
@@ -93,6 +99,8 @@ LOGIN_REDIRECT_URL = '/'
 ```
 
 ### テンプレートを変更
+
+baseを修正して、ナビゲーションにLogin、Log outボタンを追加します。
 
 blog/templates/blog/base.html
 ```html:blog/templates/blog/base.html

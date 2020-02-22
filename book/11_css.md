@@ -10,6 +10,10 @@ staticフォルダ、cssフォルダを作成し、blog.cssファイルを作成
             └── blog.css
 ```
 
+今回は、下記のテンプレートを使用してブログを作成していきます。
+
+https://startbootstrap.com/themes/clean-blog/
+
 CSSの内容は、githubの内容をコピーして貼り付けておいて下さい。
 
 blog/static/css/blog.css

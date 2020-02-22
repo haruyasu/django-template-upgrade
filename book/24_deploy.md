@@ -6,9 +6,9 @@ Herokuにデプロイして、Webアプリケーションを世界中に公開�
 
 デプロイすることによって、多くの人にあなたのWebアプリケーションを使ってもらえるようになります。
 
-### デプロイ準備
+## デプロイ準備
 
-#### パッケージ定義
+### パッケージ定義
 
 freezeコマンドをすることによって、アプリを動かすためのパッケージを一覧にまとめることができます。
 
@@ -31,7 +31,7 @@ sqlparse==0.3.0
 whitenoise==5.0.1
 ```
 
-#### Procfile作成
+### Procfile作成
 
 Procfileは、アプリのプロセスタイプやエントリーポイントを宣言するファイルです。
 
@@ -51,7 +51,7 @@ mysiteの部分はあなたが作成したアプリのディレクトリ名を�
 
 gunicornと、HerokuでDjangoをデプロイするときに必要なWebサーバーです。
 
-#### runtime.txt作成
+### runtime.txt作成
 
 runtime.txtにはプログラム実行時に必要なものを定義します。
 
@@ -69,17 +69,17 @@ runtime.txt
 python-3.6.9
 ```
 
-### Herokuを操作
+## Herokuを操作
 
 Herokuにデプロイする準備ができましたので、Herokuを操作していきます。
 
-#### Herokuアカウント作成
+### Herokuアカウント作成
 
 まずはHerokuのアカウントを作成します。
 
 https://signup.heroku.com/
 
-#### Heroku CLIインストール
+### Heroku CLIインストール
 
 OSに合わせてHeroku CLIをインストールします。
 
@@ -87,7 +87,7 @@ OSに合わせてHeroku CLIをインストールします。
 
 https://devcenter.heroku.com/articles/getting-started-with-python#set-up
 
-#### Herokuにログイン
+### Herokuにログイン
 
 ターミナルからHerokuにログインします。
 
@@ -99,7 +99,7 @@ $ heroku login
 
 ![Heroku](../img/heroku.png)
 
-#### Herokuプロジェクト作成
+### Herokuプロジェクト作成
 
 Herokuにプロジェクトを作成します。
 
@@ -117,7 +117,7 @@ Creating ⬢ django-template-blog... done
 https://django-template-blog.herokuapp.com/ | https://git.heroku.com/django-template-blog.git
 ```
 
-#### Herokuにpush
+### Herokuにpush
 
 Herokuにpushする前に、GitHubにすべてコミットしておいて下さい。
 
@@ -134,7 +134,7 @@ To https://git.heroku.com/django-template-blog.git
  * [new branch]      master -> master
 ```
 
-#### プロセスを起動
+### プロセスを起動
 
 このままだとgunicornのサーバーが起動していないため、アプリケーションが起動しません。
 
@@ -149,7 +149,7 @@ $ heroku ps:scale web=1
 Scaling dynos... done, now running web at 1:Free
 ```
 
-#### Herokuのデータベースを構築
+### Herokuのデータベースを構築
 
 migrateコマンドをしてデータベースを構築します。
 
@@ -184,7 +184,7 @@ Running migrations:
   Applying sessions.0001_initial... OK
 ```
 
-#### 管理ユーザーを作成
+### 管理ユーザーを作成
 
 ローカルと同じようにHerokuでも管理ユーザーを作成することができます。
 
