@@ -1,8 +1,10 @@
-# セキュリティ強化
+# セキュリティの強化
 
 ログインしている人だけが投稿、編集、削除、公開をできるように修正します。
 
-## view.pyに追記
+## viewに追記
+
+@login_requiredを追記すると、ログインしている人だけに制限できます。
 
 blog/views.py
 ```python:blog/views.py
@@ -31,8 +33,8 @@ from django.contrib.auth import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/login/', views.LoginView.as_view(), name='login'),
-    path('accounts/logout/', views.LogoutView.as_view(next_page='/'), name='logout'),
+    path('accounts/login/', views.LoginView.as_view(), name='login'),　# 追加
+    path('accounts/logout/', views.LogoutView.as_view(next_page='/'), name='logout'),　# 追加
     path('', include('blog.urls')),
 ]
 ```

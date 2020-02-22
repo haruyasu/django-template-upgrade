@@ -1,9 +1,11 @@
 
-# テンプレート拡張
+# テンプレートの拡張
 
 HTMLの共通部分を別のページでも使えるようにします。
 
 こうすることで、ヘッダーやフッターなど各ページで同じことを書く必要がなくなります。
+
+## base.html
 
 先ほど変更したpost_list.htmlをコピーして、base.htmlを作成します。
 
@@ -17,9 +19,11 @@ blog
 
 base.htmlのheader部分とcontent部分の内容を変更します。
 
-block xxxとendblockで囲います。
+\{% block xxx %\}と\{% endblock %\}で囲います。
 
 xxxの部分は好きな名前に変えて下さい。
+
+同じファイルにいくつもblockテンプレートタグを書くことができます。
 
 blog/templates/blog/base.html
 ```html:blog/templates/blog/base.html
@@ -48,9 +52,13 @@ blog/templates/blog/base.html
 
 ```
 
-post_list.htmlには内容が変わる部分を記載します。
+## post_list.html
 
-先頭にはテンプレートを拡張することを追記します。
+post_list.htmlには内容が変わる部分だけを記載します。
+
+今回はheaderとcontentの内容がページによって変わります。
+
+先頭には\{% extends 'blog/base.html' %\}を追記し、テンプレートを拡張することを指定します。
 
 blog/templates/blog/post_list.html
 ```html:blog/templates/blog/post_list.html

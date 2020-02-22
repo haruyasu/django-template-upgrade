@@ -2,9 +2,11 @@
 
 ブログの投稿、編集はログインしている人だけにできるように変更しましょう。
 
-ログインしている人だけに表示するように制限することができます。
+投稿ボタンや編集ボタンをログインしている人だけに、表示するように制限することができます。
 
-user.is_authenticatedを使用すると、ログインユーザーだけに制限します。
+\{% if user.is_authenticated %\}を使用すると、ログインユーザーだけに制限します。
+
+## Postボタン
 
 blog/templates/blog/base.html
 ```html:blog/templates/blog/base.html
@@ -15,9 +17,13 @@ blog/templates/blog/base.html
 {% endif %}
 ```
 
+## Editボタン
+
 blog/templates/blog/post_detail.html
 ```html:blog/templates/blog/post_detail.html
 {% if user.is_authenticated %}
   <a class="btn btn-success" href="{% url 'post_edit' pk=post.pk %}" role="button">Edit</a>
 {% endif %}
 ```
+
+これでログインユーザーだけに制限できました。

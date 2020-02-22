@@ -6,10 +6,12 @@ blog/views.pyのpost_new関数とpost_edit関数にあるpost.published_dateを�
 
 blog/views.py
 ```python:blog/views.py
-post.published_date = timezone.now()
+post.published_date = timezone.now() # 削除
 ```
 
-## Draftボタンを追加
+## Draftボタンを作成
+
+ナビゲーションにDraftボタンを追加します。
 
 blog/templates/blog/base.html
 ```html:blog/templates/blog/base.html
@@ -18,14 +20,18 @@ blog/templates/blog/base.html
 </li>
 ```
 
-## urlを追加
+## 下書きのurlを作成
+
+urlはdrafts/にします。
 
 blog/urls.py
 ```python:blog/urls.py
 path('drafts/', views.post_draft_list, name='post_draft_list'),
 ```
 
-## 下書き機能をViewに追加
+## 下書きのViewを作成
+
+下書きのviewを追加します。
 
 blog/views.py
 ```python:blog/views.py
@@ -35,9 +41,9 @@ def post_draft_list(request):
   return render(request, 'blog/post_draft_list.html', {'posts': posts})
 ```
 
-## 下書きテンプレートを追加
+## 下書きのテンプレートを作成
 
-post_draft_list.htmlファイルを追加し、テンプレートを作成します。
+post_draft_list.htmlファイルを追加し、下書きのテンプレートを作成します。
 
 blog/templates/blog/post_draft_list.html
 ```html:blog/templates/blog/post_draft_list.html
@@ -65,6 +71,9 @@ blog/templates/blog/post_draft_list.html
 {% endblock %}
 ```
 
+投稿して、下書きページに投稿した内容が表示されるか確認してみましょう。
+
 draftsページを開くと下書きが表示されます。
 
 http://127.0.0.1:8000/drafts/
+

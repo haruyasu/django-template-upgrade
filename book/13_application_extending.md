@@ -1,12 +1,16 @@
-# アプリケーション拡張
+# アプリケーションの拡張
 
 投稿の詳細ページを作成します。
 
-### 詳細へのリンクを作成
+## 詳細ページのリンクを作成
 
 post_list.htmlを変更しましょう。
 
 タイトルのリンクを設定します。
+
+\{% url 'post_detail' pk=post.pk %\}とすることで詳細ページへのリンクを張ることができます。
+
+名前をpost_detailとします。
 
 blog/templates/blog/post_list.html
 ```html:blog/templates/blog/post_list.html
@@ -17,7 +21,7 @@ blog/templates/blog/post_list.html
 </a>
 ```
 
-### 投稿の詳細へのURLを作成
+## 詳細ページのURLを作成
 
 URLのパターンを指定します。
 
@@ -29,7 +33,7 @@ urlpatterns = [
 ]
 ```
 
-### 詳細のViewを追加
+## 詳細ページのViewを追加
 
 view.pyにpost_detail関数を追加します。
 
@@ -42,7 +46,7 @@ def post_detail(request, pk):
     return render(request, 'blog/post_detail.html', {'post': post})
 ```
 
-### 詳細のテンプレートを追加
+## 詳細ページのテンプレートを追加
 
 post_detail.htmlファイルを追加します。
 
@@ -66,4 +70,6 @@ blog/templates/blog/post_detail.html
 {% endblock %}
 ```
 
-投稿をクリックすると、詳細画面が表示されました。
+トップページで投稿したタイトルをクリックすると、詳細画面が表示されました。
+
+次は、投稿フォームを作成していきましょう。

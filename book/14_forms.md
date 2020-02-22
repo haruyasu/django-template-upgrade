@@ -1,4 +1,4 @@
-# フォーム作成
+# フォームの作成
 
 フォームを作成して、Web上で記事を追加したり、編集したりします。
 
@@ -8,6 +8,8 @@ forms.pyファイルを追加します。
 blog
    └── forms.py
 ```
+
+フィールドはタイトルと内容にします。
 
 blog/forms.py
 ```python:blog/forms.py
@@ -20,7 +22,7 @@ class PostForm(forms.ModelForm):
     fields = ('title', 'text',)
 ```
 
-### フォームへのページリンクを作成
+## フォームページのリンクを作成
 
 Aboutの下にPostリンクを追加します。
 
@@ -31,7 +33,7 @@ blog/templates/blog/base.html
 </li>
 ```
 
-### フォームのURLを追加
+## フォームページのURLを作成
 
 post/new/のURLを追加します。
 
@@ -44,7 +46,9 @@ urlpatterns = [
 ]
 ```
 
-### フォームのViewを追加
+## フォームページのViewを作成
+
+viewに追加してテンプレートを指定します。
 
 blog/views.py
 ```python:blog/views.py
@@ -55,7 +59,7 @@ def post_new(request):
   return render(request, 'blog/post_edit.html', {'form': form})
 ```
 
-### フォームのテンプレートを追加
+## フォームページのテンプレートを作成
 
 post_edit.htmlファイルを追加します。
 
@@ -80,9 +84,15 @@ blog/templates/blog/post_edit.html
 {% endblock %}
 ```
 
-### フォームを保存
+## フォームの保存動作を作成
 
-post_new関数を書き換えます。
+保存ボタンを押したときに、詳細ページに移動するように修正します。
+
+post_detailにリダイレクトします。
+
+この時に新しい内容を引数として渡します。
+
+viewのpost_new関数を書き換えます。
 
 blog/views.py
 ```python:blog/views.py
@@ -102,9 +112,13 @@ def post_new(request):
   return render(request, 'blog/post_edit.html', {'form': form})
 ```
 
-### フォームの編集
+## フォームの編集動作を作成
 
-#### Editボタンを追加
+投稿された内容を編集するボタンを追加します。
+
+### Editボタンを作成
+
+post.textの上にEditボタンを追加します。
 
 blog/templates/blog/post_detail.html
 ```html:blog/templates/blog/post_detail.html
@@ -115,7 +129,9 @@ blog/templates/blog/post_detail.html
 </p>
 ```
 
-#### Editのリンクを追加
+### Editのリンクを作成
+
+Editボタンを押した後のリンクを追加します。
 
 blog/urls.py
 ```python:blog/urls.py
@@ -123,13 +139,15 @@ urlpatterns = [
     path('', views.post_list, name='post_list'),
     path('post/<int:pk>/', views.post_detail, name='post_detail'),
     path('post/new/', views.post_new, name='post_new'),
-    path('post/<int:pk>/edit/', views.post_edit, name='post_edit'),
+    path('post/<int:pk>/edit/', views.post_edit, name='post_edit'), # 追加
 ]
 ```
 
-#### Viewに追加
+### EditのViewを作成
 
-post_edit関数を追加します。
+post_edit関数をviewに追加します。
+
+post_newとの違いは、instance=postとしてインスタンスを渡しています。
 
 blog/views.py
 ```python:blog/views.py
