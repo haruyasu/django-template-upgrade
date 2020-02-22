@@ -9,13 +9,13 @@
 @login_requiredを追記すると、ログインしている人だけに制限できます。
 
 blog/views.py
-```python:blog/views.py
+```python
 from django.contrib.auth.decorators import login_required
 ```
 
 post_new, post_edit, post_draft_list, post_remove, post_publish関数の上にデコレーターを追記します。
 
-```python:blog/views.py
+```python
 @login_required
 def post_new(request):
     [...]
@@ -30,7 +30,7 @@ def post_new(request):
 login、logoutのurlを追記します。
 
 mysite/urls.py
-```python:mysite/urls.py
+```python
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views
@@ -50,7 +50,7 @@ blog/templates/registrationフォルダを作成し、login.htmlファイルを�
 ログイン画面を作成します。
 
 blog/templates/registration/login.html
-```html:blog/templates/registration/login.html
+```html
 {% extends "blog/base.html" %}
 
 {% block header %}
@@ -94,7 +94,7 @@ mysite/settings.pyを変更します。
 下記のコードを一番下に追加します。
 
 mysite/settings.py
-```python:mysite/settings.py
+```python
 LOGIN_REDIRECT_URL = '/'
 ```
 
@@ -103,7 +103,7 @@ LOGIN_REDIRECT_URL = '/'
 baseを修正して、ナビゲーションにLogin、Log outボタンを追加します。
 
 blog/templates/blog/base.html
-```html:blog/templates/blog/base.html
+```html
 {% if user.is_authenticated %}
 <li class="nav-item">
   <a class="nav-link" href="{% url 'post_new' %}">Post</a>

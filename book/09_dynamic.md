@@ -23,7 +23,7 @@ https://docs.djangoproject.com/ja/2.2/topics/db/queries/
 https://qiita.com/okoppe8/items/66a8747cf179a538355b
 
 blog/views.py
-```python:blog/views.py
+```python
 from django.shortcuts import render
 from django.utils import timezone
 from .models import Post

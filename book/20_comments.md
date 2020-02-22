@@ -5,7 +5,7 @@
 models.pyに追記します。
 
 blog/models.py
-```python:blog/models.py
+```python
 class Comment(models.Model):
   post = models.ForeignKey('blog.Post', on_delete=models.CASCADE, related_name='comments')
   author = models.CharField(max_length=200)
@@ -34,7 +34,7 @@ class Comment(models.Model):
 管理画面でコメントを操作できるようにします。
 
 blog/admin.py
-```python:blog/admin.py
+```python
 from django.contrib import admin
 from .models import Post, Comment
 
@@ -51,7 +51,7 @@ http://127.0.0.1:8000/admin/blog/comment/
 最後の\{% endblock %\}の前に追記します。
 
 blog/templates/blog/post_detail.html
-```html:blog/templates/blog/post_detail.html
+```html
 <p>
   {{ post.text|linebreaksbr }}
 </p>
@@ -71,7 +71,7 @@ blog/templates/blog/post_detail.html
 投稿ページでコメントの数を表示します。
 
 blog/templates/blog/post_list.html
-```html:blog/templates/blog/post_list.html
+```html
   <p>{{ post.text|linebreaksbr|truncatechars:100 }}</p>
   <a href="{% url 'post_detail' pk=post.pk %}">
     <p class="post-comment">Comments: {{ post.comments.count }}</p>
@@ -86,7 +86,7 @@ blog/templates/blog/post_list.html
 forms.pyファイルを変更します。
 
 blog/forms.py
-```python:blog/forms.py
+```python
 from django import forms
 from .models import Post, Comment
 
@@ -106,7 +106,7 @@ class CommentForm(forms.ModelForm):
 ### コメントボタンを作成
 
 blog/templates/blog/post_detail.html
-```html:blog/templates/blog/post_detail.html
+```html
 <hr>
 <p>
   <a class="btn btn-success" href="{% url 'post_comment' pk=post.pk %}" role="button">Add comment</a>
@@ -117,14 +117,14 @@ blog/templates/blog/post_detail.html
 ### コメントのurlを作成
 
 blog/urls.py
-```python:blog/urls.py
+```python
 path('post/<int:pk>/comment/', views.post_comment, name='post_comment'),
 ```
 
 ### コメントのViewを作成
 
 blog/views.py
-```python:blog/views.py
+```python
 from .forms import PostForm, CommentForm
 
 def post_comment(request, pk):
@@ -144,7 +144,7 @@ def post_comment(request, pk):
 ### コメントを投稿するテンプレートを作成
 
 blog/templates/blog/post_comment.html
-```html:blog/templates/blog/post_comment.html
+```html
 {% extends 'blog/base.html' %}
 
 {% block header %}
@@ -171,7 +171,7 @@ blog/templates/blog/post_comment.html
 RemoveボタンとApproveボタンを追加します。
 
 blog/templates/blog/post_detail.html
-```html:blog/templates/blog/post_detail.html
+```html
 {% for comment in post.comments.all %}
   {% if not comment.approved_comment %}
   <p>
@@ -184,7 +184,7 @@ blog/templates/blog/post_detail.html
 ### コメント管理のurlを作成
 
 blog/urls.py
-```python:blog/urls.py
+```python
   path('comment/<int:pk>/approve/', views.comment_approve, name='comment_approve'),
   path('comment/<int:pk>/remove/', views.comment_remove, name='comment_remove'),
 ```
@@ -192,7 +192,7 @@ blog/urls.py
 ### コメント管理のViewを作成
 
 blog/views.py
-```python:blog/views.py
+```python
 from .models import Post, Comment
 
 @login_required
@@ -213,7 +213,7 @@ def comment_remove(request, pk):
 ### 承認されたコメント数を表示
 
 blog/templates/blog/post_list.html
-```html:blog/templates/blog/post_list.html
+```html
   <p>{{ post.text|linebreaksbr|truncatechars:100 }}</p>
   <a href="{% url 'post_detail' pk=post.pk %}">
     <p class="post-comment">Comments: {{ post.approved_comments.count }}</p>
@@ -228,7 +228,7 @@ blog/templates/blog/post_list.html
 Postモデルに追加します。
 
 blog/models.py
-```python:blog/models.py
+```python
 class Post(models.Model):
 
   def approved_comments(self):

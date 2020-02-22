@@ -15,7 +15,7 @@ blog
 まずは最小限のHTMLを追加してみましょう。
 
 blog/templates/blog/post_list.html
-```html:blog/templates/blog/post_list.html
+```html
 <html>
 <body>
     <p>Hello!</p>

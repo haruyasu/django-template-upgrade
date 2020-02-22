@@ -7,21 +7,21 @@
 編集ボタンの下にDeleteボタン追加します。
 
 blog/templates/blog/post_detail.html
-```html:blog/templates/blog/post_detail.html
+```html
 <a class="btn btn-danger" href="{% url 'post_remove' pk=post.pk %}" role="button">Delete</a>
 ```
 
 ## 削除ボタンのurlを作成
 
 blog/urls.py
-```python:blog/urls.py
+```python
 path('post/<pk>/remove/', views.post_remove, name='post_remove'),
 ```
 
 ## 削除ボタンのViewを作成
 
 blog/views.py
-```python:blog/views.py
+```python
 def post_remove(request, pk):
   post = get_object_or_404(Post, pk=pk)
   post.delete()

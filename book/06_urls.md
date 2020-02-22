@@ -7,7 +7,7 @@
 トップページにアクセスした時には、blog.urlsへリダイレクトするようにします。
 
 mysite/urls.py
-```python:mysite/urls.py
+```python
 from django.contrib import admin
 from django.urls import path, include
 
@@ -26,7 +26,7 @@ blogの下に、urls.pyファイルを作成します。
 トップページにアクセスした時に、post_listをみることになります。
 
 blog/urls.py
-```python:blog/urls.py
+```python
 from django.urls import path
 from . import views
 

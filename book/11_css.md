@@ -32,7 +32,7 @@ https://getbootstrap.com/
 blog.cssは{% static 'css/blog.css' %}を指定することで読み込むことができます。
 
 blog/templates/blog/post_list.html
-```html:blog/templates/blog/post_list.html
+```html
 {% load static %}
 <!DOCTYPE html>
 <html lang="ja">

@@ -9,7 +9,7 @@
 ## Postボタン
 
 blog/templates/blog/base.html
-```html:blog/templates/blog/base.html
+```html
 {% if user.is_authenticated %}
   <li class="nav-item">
     <a class="nav-link" href="{% url 'post_new' %}">Post</a>
@@ -20,7 +20,7 @@ blog/templates/blog/base.html
 ## Editボタン
 
 blog/templates/blog/post_detail.html
-```html:blog/templates/blog/post_detail.html
+```html
 {% if user.is_authenticated %}
   <a class="btn btn-success" href="{% url 'post_edit' pk=post.pk %}" role="button">Edit</a>
 {% endif %}

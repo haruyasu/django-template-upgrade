@@ -11,7 +11,7 @@ Djangoではテンプレートが使用できます。
 postsのリストをループして一つずつ表示します。
 
 blog/templates/blog/post_list.html
-```html:blog/templates/blog/post_list.html
+```html
 <!DOCTYPE html>
 <html lang="ja">
 <head>

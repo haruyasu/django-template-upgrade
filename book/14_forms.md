@@ -12,7 +12,7 @@ blog
 フィールドはタイトルと内容にします。
 
 blog/forms.py
-```python:blog/forms.py
+```python
 from django import forms
 from .models import Post
 
@@ -27,7 +27,7 @@ class PostForm(forms.ModelForm):
 Aboutの下にPostリンクを追加します。
 
 blog/templates/blog/base.html
-```html:blog/templates/blog/base.html
+```html
 <li class="nav-item">
   <a class="nav-link" href="{% url 'post_new' %}">Post</a>
 </li>
@@ -38,7 +38,7 @@ blog/templates/blog/base.html
 post/new/のURLを追加します。
 
 blog/urls.py
-```python:blog/urls.py
+```python
 urlpatterns = [
     path('', views.post_list, name='post_list'),
     path('post/<int:pk>/', views.post_detail, name='post_detail'),
@@ -51,7 +51,7 @@ urlpatterns = [
 viewに追加してテンプレートを指定します。
 
 blog/views.py
-```python:blog/views.py
+```python
 from .forms import PostForm
 
 def post_new(request):
@@ -64,7 +64,7 @@ def post_new(request):
 post_edit.htmlファイルを追加します。
 
 blog/templates/blog/post_edit.html
-```html:blog/templates/blog/post_edit.html
+```html
 {% extends 'blog/base.html' %}
 
 {% block header %}
@@ -95,7 +95,7 @@ post_detailにリダイレクトします。
 viewのpost_new関数を書き換えます。
 
 blog/views.py
-```python:blog/views.py
+```python
 from django.shortcuts import redirect
 
 def post_new(request):
@@ -121,7 +121,7 @@ def post_new(request):
 post.textの上にEditボタンを追加します。
 
 blog/templates/blog/post_detail.html
-```html:blog/templates/blog/post_detail.html
+```html
 <a class="btn btn-success" href="{% url 'post_edit' pk=post.pk %}" role="button">Edit</a>
 
 <p>
@@ -134,7 +134,7 @@ blog/templates/blog/post_detail.html
 Editボタンを押した後のリンクを追加します。
 
 blog/urls.py
-```python:blog/urls.py
+```python
 urlpatterns = [
     path('', views.post_list, name='post_list'),
     path('post/<int:pk>/', views.post_detail, name='post_detail'),
@@ -150,7 +150,7 @@ post_edit関数をviewに追加します。
 post_newとの違いは、instance=postとしてインスタンスを渡しています。
 
 blog/views.py
-```python:blog/views.py
+```python
 def post_edit(request, pk):
   post = get_object_or_404(Post, pk=pk)
   if request.method == "POST":

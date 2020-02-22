@@ -235,7 +235,7 @@ local_settings.pyファイルを作成します。
 ローカルのみDEBUG機能を有効にします。
 
 mysite/local_settings.py
-```python:mysite/local_settings.py
+```python
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -251,7 +251,7 @@ DEBUG = True
 setting.pyを変更します。
 
 mysite/settings.py
-```python:mysite/settings.py
+```python
 # Falseに変更
 DEBUG = False
 
@@ -294,7 +294,7 @@ Not Foundと表示されるはずです。
 先ほど作成した、local_settings.pyにSECRET_KEYを移動させましょう。
 
 mysite/local_settings.py
-```python:mysite/local_settings.py
+```python
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'xxxxxxxxxxxxxxxxxxxx'
 ```
@@ -302,7 +302,7 @@ SECRET_KEY = 'xxxxxxxxxxxxxxxxxxxx'
 settings.pyのSECRET_KEYは削除します。
 
 mysite/settings.py
-```python:mysite/settings.py
+```python
 # 削除
 SECRET_KEY = 'xxxxxxxxxxxxxxxxxxxx'
 

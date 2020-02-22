@@ -13,7 +13,7 @@ post_list.htmlを変更しましょう。
 名前をpost_detailとします。
 
 blog/templates/blog/post_list.html
-```html:blog/templates/blog/post_list.html
+```html
 <a href="{% url 'post_detail' pk=post.pk %}">
   <h2 class="post-title">
     {{ post.title }}
@@ -26,7 +26,7 @@ blog/templates/blog/post_list.html
 URLのパターンを指定します。
 
 blog/urls.py
-```python:blog/urls.py
+```python
 urlpatterns = [
     path('', views.post_list, name='post_list'),
     path('post/<int:pk>/', views.post_detail, name='post_detail'),
@@ -38,7 +38,7 @@ urlpatterns = [
 view.pyにpost_detail関数を追加します。
 
 blog/views.py
-```python:blog/views.py
+```python
 from django.shortcuts import render, get_object_or_404
 
 def post_detail(request, pk):
@@ -51,7 +51,7 @@ def post_detail(request, pk):
 post_detail.htmlファイルを追加します。
 
 blog/templates/blog/post_detail.html
-```html:blog/templates/blog/post_detail.html
+```html
 {% extends 'blog/base.html' %}
 
 {% block header %}

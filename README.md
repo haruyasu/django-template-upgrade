@@ -12,11 +12,11 @@
 
 詳しいコードの解説は、Djangoの公式ページをみて下さい。
 
-https://docs.djangoproject.com/ja/2.2/
+{% embed url="https://docs.djangoproject.com/ja/2.2/" %}
 
 もしエラーが発生したり、分かりにくい箇所は下記のGitHubにて確認をして下さい。
 
-https://github.com/haruyasu/django-template-upgrade
+{% embed url="https://github.com/haruyasu/django-template-upgrade" %}
 
 ## 目標
 

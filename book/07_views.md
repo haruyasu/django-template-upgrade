@@ -7,7 +7,7 @@ returnにrender関数をコールして、どのテンプレートファイル�
 こうすることで、url→view→templateの流れを作ることができます。
 
 blog/views.py
-```python:blog/views.py
+```python
 from django.shortcuts import render
 
 def post_list(request):

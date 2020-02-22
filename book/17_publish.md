@@ -7,7 +7,7 @@
 Editボタンの上にPublishボタンを追加します。
 
 blog/templates/blog/post_detail.html
-```html:blog/templates/blog/post_detail.html
+```html
 {% if not post.published_date %}
   <a class="btn btn-warning" href="{% url 'post_publish' pk=post.pk %}" role="button">Publish</a>
 {% endif %}
@@ -16,14 +16,14 @@ blog/templates/blog/post_detail.html
 ## 公開ボタンのurlを作成
 
 blog/urls.py
-```python:blog/urls.py
+```python
 path('post/<pk>/publish/', views.post_publish, name='post_publish'),
 ```
 
 ## 公開ボタンのViewを作成
 
 blog/views.py
-```python:blog/views.py
+```python
 def post_publish(request, pk):
   post = get_object_or_404(Post, pk=pk)
   post.publish()

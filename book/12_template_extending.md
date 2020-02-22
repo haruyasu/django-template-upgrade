@@ -26,7 +26,7 @@ xxxの部分は好きな名前に変えて下さい。
 同じファイルにいくつもblockテンプレートタグを書くことができます。
 
 blog/templates/blog/base.html
-```html:blog/templates/blog/base.html
+```html
   <!-- Page Header -->
   <header class="masthead">
     <div class="overlay"></div>
@@ -61,7 +61,7 @@ post_list.htmlには内容が変わる部分だけを記載します。
 先頭には\{% extends 'blog/base.html' %\}を追記し、テンプレートを拡張することを指定します。
 
 blog/templates/blog/post_list.html
-```html:blog/templates/blog/post_list.html
+```html
 {% extends 'blog/base.html' %}
 
 {% block header %}

@@ -8,7 +8,7 @@ Djangoには管理画面が存在します。
 作成したモデルを管理画面で見えるようにします。
 
 blog/admin.py
-```python:blog/admin.py
+```python
 from django.contrib import admin
 from .models import Post
 

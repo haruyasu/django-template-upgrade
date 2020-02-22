@@ -5,7 +5,7 @@
 blog/views.pyのpost_new関数とpost_edit関数にあるpost.published_dateを削除します。
 
 blog/views.py
-```python:blog/views.py
+```python
 post.published_date = timezone.now() # 削除
 ```
 
@@ -14,7 +14,7 @@ post.published_date = timezone.now() # 削除
 ナビゲーションにDraftボタンを追加します。
 
 blog/templates/blog/base.html
-```html:blog/templates/blog/base.html
+```html
 <li class="nav-item">
   <a class="nav-link" href="{% url 'post_draft_list' %}">Draft</a>
 </li>
@@ -25,7 +25,7 @@ blog/templates/blog/base.html
 urlはdrafts/にします。
 
 blog/urls.py
-```python:blog/urls.py
+```python
 path('drafts/', views.post_draft_list, name='post_draft_list'),
 ```
 
@@ -34,7 +34,7 @@ path('drafts/', views.post_draft_list, name='post_draft_list'),
 下書きのviewを追加します。
 
 blog/views.py
-```python:blog/views.py
+```python
 def post_draft_list(request):
   posts = Post.objects.filter(
       published_date__isnull=True).order_by('created_date')
@@ -46,7 +46,7 @@ def post_draft_list(request):
 post_draft_list.htmlファイルを追加し、下書きのテンプレートを作成します。
 
 blog/templates/blog/post_draft_list.html
-```html:blog/templates/blog/post_draft_list.html
+```html
 {% extends 'blog/base.html' %}
 
 {% block header %}

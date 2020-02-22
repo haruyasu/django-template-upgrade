@@ -7,7 +7,7 @@
 ナビゲーションにaboutボタンを追加します。
 
 html:blog/templates/blog/base.html
-```html:blog/templates/blog/base.html
+```html
 <li class="nav-item">
   <a class="nav-link" href="{% url 'about' %}">About</a>
 </li>
@@ -16,14 +16,14 @@ html:blog/templates/blog/base.html
 ## urlを追加
 
 blog/urls.py
-```python:blog/urls.py
+```python
   path('about/', views.about, name='about'),
 ```
 
 ## Viewを追加
 
 blog/views.py
-```python:blog/views.py
+```python
 def about(request):
   return render(request, 'page/about.html')
 ```
@@ -37,8 +37,8 @@ def about(request):
 自己紹介を書くといいと思います。
 
 レイアウトを考えて、CSSに追記してみて下さい。
-
-```html:blog/templates/page/about.html
+blog/templates/page/about.html
+```html
 {% extends 'blog/base.html' %}
 
 {% block header %}
