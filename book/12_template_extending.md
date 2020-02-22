@@ -17,6 +17,10 @@ blog
 
 base.htmlのheader部分とcontent部分の内容を変更します。
 
+block xxxとendblockで囲います。
+
+xxxの部分は好きな名前に変えて下さい。
+
 blog/templates/blog/base.html
 ```html:blog/templates/blog/base.html
   <!-- Page Header -->
