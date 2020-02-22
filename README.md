@@ -1,12 +1,12 @@
 # ブログ構築
 
-はじめてのDjangoアプリ開発のチュートリアルです。
+はじめまして、フリーランスプログラミング講師のHaru([@hathle](https://twitter.com/hathle))です。
+
+今回は、Djangoアプリ開発のチュートリアルです。
 
 すぐにDjangoを使ってアプリ開発をしてみたい方向けの内容になっています。
 
 この通りに実装すると、Webアプリケーションを公開することができます。
-
-今回はHerokuを使用しています。
 
 まずは、シンプルなブログを作って、Djangoの機能を理解していきましょう。
 
@@ -14,9 +14,15 @@
 
 {% embed url="https://docs.djangoproject.com/ja/2.2/" %}
 
-もしエラーが発生したり、分かりにくい箇所は下記のGitHubにて確認をして下さい。
+もしエラーが発生したり、分かりにくい箇所は下記のGitHubにてソースコードを確認して下さい。
 
 {% embed url="https://github.com/haruyasu/django-template-upgrade" %}
+
+この内容はDjango Girlsの内容を改良しています。
+
+詳しい解説はDjango Girlsを参考にして下さい。
+
+{% embed url="https://tutorial.djangogirls.org/ja/" %}
 
 ## 目標
 

@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Blog構築](README.md)
+* [ブログ構築](README.md)
 * [前準備](book/01_ready.md)
 * [プロジェクトの作成](book/02_project.md)
 * [新しいアプリケーションの作成](book/03_app.md)
