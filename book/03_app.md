@@ -35,7 +35,7 @@ startappコマンドでアプリケーションを追加できます。
 INSTALLED_APPSに追加します。
 
 mysite/settings.py
-```python:mysite/settings.py
+```python
 # Application definition
 
 INSTALLED_APPS = [

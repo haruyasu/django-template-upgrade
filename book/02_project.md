@@ -11,7 +11,7 @@ django-adminコマンドでプロジェクトを作成します。
 settings.pyを変更します。
 
 mysite/settings.py
-```python:mysite/settings.py
+```python
 ALLOWED_HOSTS = ['*']
 
 LANGUAGE_CODE = 'ja'

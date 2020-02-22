@@ -30,10 +30,3 @@ imgフォルダにtitle.pngを追加します。
 あまりに大きいサイズの画像は必要ありませんので、画像編集ソフトでトリミングしておきます。
 
 {% embed url="https://imagecompressor.com/ja/" %}
-
-```python
-print("test")
-```
-
-
-

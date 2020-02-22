@@ -18,7 +18,7 @@ https://docs.djangoproject.com/ja/2.2/ref/models/fields/#charfield
 
 https://qiita.com/nachashin/items/f768f0d437e0042dd4b3
 
-```python:blog/models.py
+```python
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
