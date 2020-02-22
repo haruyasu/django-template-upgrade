@@ -4,16 +4,12 @@
 
 blog/static/imgフォルダを作成します。
 
-{% tabs %}
-{% tab title="blog/static/img" %}
 ```text
 └── blog
     └── static
         └── img
             └── title.png
 ```
-{% endtab %}
-{% endtabs %}
 
 imgフォルダにtitle.pngを追加します。
 
