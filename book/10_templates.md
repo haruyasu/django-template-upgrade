@@ -1,5 +1,14 @@
+# テンプレートの作成
 
-## テンプレート
+Djangoではテンプレートが使用できます。
+
+二重括弧{{}}で囲うことによって、viewsのreturnの最後の引数で指定した値を使用することができます。
+
+今回の場合はpostsです。
+
+{% for %}と指定することで、ループを使うことができます。
+
+postsのリストをループして一つずつ表示します。
 
 blog/templates/blog/post_list.html
 ```html:blog/templates/blog/post_list.html
@@ -26,13 +35,14 @@ blog/templates/blog/post_list.html
 </html>
 ```
 
-管理サイトでPostをPublishします。
+## 管理画面でPostをPublish
 
 Published dataを追記します。
 
 ![Post](../img/publish.png)
 
-Webサーバー開始
+## Webサーバー開始
+
 ```
 (myvenv) ~$ python3 manage.py runserver
 ```

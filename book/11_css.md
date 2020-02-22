@@ -1,7 +1,7 @@
 
-# CSSでデザインをする
+# CSSの作成
 
-blog.cssファイルを作成する
+staticフォルダ、cssフォルダを作成し、blog.cssファイルを作成します。
 
 ```
 └── blog
@@ -10,13 +10,22 @@ blog.cssファイルを作成する
             └── blog.css
 ```
 
+CSSの内容は、githubの内容をコピーして貼り付けておいて下さい。
+
 blog/static/css/blog.css
 
 https://github.com/haruyasu/django-template-upgrade/blob/master/blog/static/css/blog.css
 
-CSSは多いので、githubの内容をコピーして貼り付けておいて下さい。
 
 ## トップページを変更
+
+Bootstrapを使用して、トップページを変更してみましょう。
+
+Bootstrapの詳しい内容は公式ドキュメントを参考にして下さい。
+
+https://getbootstrap.com/
+
+blog.cssは{% static 'css/blog.css' %}を指定することで読み込むことができます。
 
 blog/templates/blog/post_list.html
 ```html:blog/templates/blog/post_list.html
