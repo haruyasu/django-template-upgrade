@@ -22,7 +22,7 @@
 
 このチュートリアルを実施すると、下記のようなブログサイトを構築することができます。
 
-https://django-template-blog-upgrade.herokuapp.com/
+{% embed url="https://django-template-blog-upgrade.herokuapp.com/" %}
 
 ログイン、ブログ投稿、編集、削除、コメント機能を実装し、固定ページでAboutページなど好きなページも追加できます。
 

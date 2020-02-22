@@ -12,14 +12,13 @@ staticフォルダ、cssフォルダを作成し、blog.cssファイルを作成
 
 今回は、下記のテンプレートを使用してブログを作成していきます。
 
-https://startbootstrap.com/themes/clean-blog/
+{% embed url="https://startbootstrap.com/themes/clean-blog/" %}
 
 CSSの内容は、githubの内容をコピーして貼り付けておいて下さい。
 
 blog/static/css/blog.css
 
-https://github.com/haruyasu/django-template-upgrade/blob/master/blog/static/css/blog.css
-
+{% embed url="https://github.com/haruyasu/django-template-upgrade/blob/master/blog/static/css/blog.css" %}
 
 ## トップページを変更
 
@@ -27,7 +26,7 @@ Bootstrapを使用して、トップページを変更してみましょう。
 
 Bootstrapの詳しい内容は公式ドキュメントを参考にして下さい。
 
-https://getbootstrap.com/
+{% embed url="https://getbootstrap.com/" %}
 
 blog.cssは{% static 'css/blog.css' %}を指定することで読み込むことができます。
 

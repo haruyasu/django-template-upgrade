@@ -77,7 +77,7 @@ Herokuにデプロイする準備ができましたので、Herokuを操作し�
 
 まずはHerokuのアカウントを作成します。
 
-https://signup.heroku.com/
+{% embed url="https://signup.heroku.com/" %}
 
 ### Heroku CLIインストール
 
@@ -85,7 +85,7 @@ OSに合わせてHeroku CLIをインストールします。
 
 インストールすることによって、コマンドラインからHerokuの操作が出来るようになります。
 
-https://devcenter.heroku.com/articles/getting-started-with-python#set-up
+{% embed url="https://devcenter.heroku.com/articles/getting-started-with-python" %}
 
 ### Herokuにログイン
 

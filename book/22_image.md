@@ -15,7 +15,7 @@ imgフォルダにtitle.pngを追加します。
 
 フリー素材を使用して、好きな画像をタイトルに追加しましょう。
 
-[https://pixabay.com/](https://pixabay.com/)
+{% embed url="https://pixabay.com/" %}
 
 ブログで使用する画像は、著作権に気を付けて下さい。
 

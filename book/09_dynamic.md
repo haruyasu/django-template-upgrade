@@ -17,10 +17,10 @@
 クエリの実行結果をクエリセットと呼びます。
 
 公式ドキュメント
-https://docs.djangoproject.com/ja/2.2/topics/db/queries/
+{% embed url="https://docs.djangoproject.com/ja/2.2/topics/db/queries/" %}
 
 分かりやすく解説されています。
-https://qiita.com/okoppe8/items/66a8747cf179a538355b
+{% embed url="https://qiita.com/okoppe8/items/66a8747cf179a538355b" %}
 
 blog/views.py
 ```python
