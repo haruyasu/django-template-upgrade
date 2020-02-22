@@ -4,18 +4,22 @@
 
 blog/static/imgフォルダを作成します。
 
+{% tabs %}
+{% tab title="blog/static/img" %}
 ```text
 └── blog
     └── static
         └── img
             └── title.png
 ```
+{% endtab %}
+{% endtabs %}
 
 imgフォルダにtitle.pngを追加します。
 
 フリー素材を使用して、好きな画像をタイトルに追加しましょう。
 
-{% embed url="https://pixabay.com/" %}
+{% embed url="https://pixabay.com/" caption="" %}
 
 ブログで使用する画像は、著作権に気を付けて下さい。
 
@@ -29,4 +33,5 @@ imgフォルダにtitle.pngを追加します。
 
 あまりに大きいサイズの画像は必要ありませんので、画像編集ソフトでトリミングしておきます。
 
-{% embed url="https://imagecompressor.com/ja/" %}
+{% embed url="https://imagecompressor.com/ja/" caption="" %}
+

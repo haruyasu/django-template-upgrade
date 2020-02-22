@@ -22,7 +22,7 @@
 * [セキュリティの強化](book/19_auth.md)
 * [コメント機能の追加](book/20_comments.md)
 * [JavaScriptの追加](book/21_javascript.md)
-* [トップ画像の追加](book/22_image.md)
+* [トップ画像の追加](22_image.md)
 * [固定ページの追加](book/23_about.md)
 * [Herokuデプロイ](book/24_deploy.md)
 
